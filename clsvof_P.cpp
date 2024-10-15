@@ -63,8 +63,8 @@ CLSVOF::~CLSVOF()
 }
 void CLSVOF::ini(double xc,double yc,double a,double b)
 {
-	beta_y=2.3;	//3 mesh space smoothing in z direction
-	//beta_y=3.5;	//2 mesh space smoothing in z direction
+	beta_y=2.3;	//3 mesh space smoothing in y direction
+	//beta_y=3.5;	//2 mesh space smoothing in y direction
 	double sm=1.5;	//3 mesh space smoothing in r direction
 	//double sm=1.0;	//2 mesh space smoothing in r direction
 	for(int i=1;i<=I;i++)	//calculate beta in radial direction WRT CX[i]
