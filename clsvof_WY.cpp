@@ -62,15 +62,15 @@ CLSVOF::~CLSVOF()
 }
 void CLSVOF::ini(double xc,double yc,double a,double b)
 {
-	beta_y=2.3;	//3 mesh space smoothing in z direction
-	//beta_y=3.5;	//2 mesh space smoothing in z direction
+	beta_y=2.3;	//3 mesh space smoothing in y direction
+	//beta_y=3.5;	//2 mesh space smoothing in y direction
 	double sm=1.5;	//3 mesh space smoothing in r direction
 	//double sm=1.0;	//2 mesh space smoothing in r direction
 	for(int i=1;i<=I;i++)	//calculate beta in radial direction WRT CX[i]
 		beta_x[i]=dx*atanh(1.0-2.0*1e-3)/(sm*(CX[i]+0.5*sm*dx));
 	cout<<"CLSVOF: beta_y = "<<beta_y<<endl;
 
-	INI ms(Xm,Ym,CX,CY,F_act,Phi_act,xc,yc,beta_x,beta_y,a);	//mTHINC algorithm is used
+	INI ms(Xm,Ym,CX,CY,F_act,Phi_act,xc,yc,beta_x,beta_y,a);
 	ms.inter();	//export initial interface
 	ms.VF();	//initial exact volume fraction is calculated here
 	ms.LS();	//initial exact level set field
@@ -315,7 +315,7 @@ double CLSVOF::vol_frac_flux(int flag,int i,int j,double **Fa,double **Phia,doub
 		else if((abs(Fa[j][up]-1.0)<=EPS)||(Fa[j][up]>1.0))	//completely filled cell or over-filled cell
 			return (Xm[i]*V);
 	}
-	else	//advection in z direction
+	else	//advection in y direction
 	{
 		up=(V<0.0)?(j+1):j;
 		if((abs(Fa[up][i])<=EPS)||(Fa[up][i]<0.0)) return 0.0;	//empty cell or over-empty cell
@@ -344,7 +344,7 @@ double CLSVOF::vol_frac_flux(int flag,int i,int j,double **Fa,double **Phia,doub
 		Fy=Xm[i]*V*Fa[j][up];
 		N.x=0.5*abs(Phia[j][up+1]-Phia[j][up-1])/dx; N.y=0.5*abs(Phia[j+1][up]-Phia[j-1][up])/dy;
 	}
-	else	//advection in z direction
+	else	//advection in y direction
 	{
 		lam=(V<0.0)?0:1;
 		alp=(Fa[up+1][i]>=Fa[up-1][i])?1:-1;
